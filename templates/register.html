@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Регистрация</h1>
-    <form action="" method="post">
+    <h1 style="color: #FFC300;">Регистрация</h1>
+    <form action="" method="post" style="color: #FFC300;">
         {{ form.hidden_tag() }}
         <p>
             {{ form.email.label }}<br>
@@ -40,6 +40,6 @@
                 </p>
             {% endfor %}
         </p>
-        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary", style="color: #FF5733; background-color: #581845; border-color: #581845;") }}</p>
     </form>
 {% endblock %}

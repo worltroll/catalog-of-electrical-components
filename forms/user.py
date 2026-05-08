@@ -3,20 +3,20 @@ from wtforms import SubmitField, EmailField, PasswordField, StringField, Boolean
 
 
 class RegistationForm(FlaskForm):
-    email = EmailField("Email", validators=[validators.DataRequired()])
-    password = PasswordField("Password", validators=[validators.DataRequired()])
-    name = StringField("Name")
+    email = EmailField("Эл. Почта", validators=[validators.DataRequired()])
+    password = PasswordField("Пароль", validators=[validators.DataRequired()])
+    name = StringField("Имя")
     confirm = PasswordField(
-        "Repeat password",
+        "Повторите пароль",
         validators=[
             validators.DataRequired(),
-            validators.EqualTo("password", message="Passwords need to match"),
+            validators.EqualTo("password", message="Пароли должны совпадать"),
         ],
     )
     submit = SubmitField("Зарегистрироваться")
 
 class LoginForm(FlaskForm):
-    email = EmailField('Почта', validators=[validators.DataRequired()])
+    email = EmailField('Эл. Почта', validators=[validators.DataRequired()])
     password = PasswordField('Пароль', validators=[validators.DataRequired()])
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
