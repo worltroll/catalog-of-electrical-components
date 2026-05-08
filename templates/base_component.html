@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1>{{ %name% }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <p>Описание</p>
+        </div>
+    </div>
+    {% block content 1 %}{% endblock %}
+
+    <div class="row">
+        <div class="col">
+            <p>{{ %tool% }}</p>
+        </div>
+    </div>
+    {% block content 2 %}{% endblock %}
+{% endblock %}

@@ -24,6 +24,10 @@ def load_user(user_id):
 def index():
     return render_template("index.html", title="Главная страница")
 
+@app.route("/catalog")
+def catalog():
+    return render_template("catalog.html", title="Каталог")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():

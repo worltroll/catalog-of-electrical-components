@@ -8,22 +8,22 @@
     <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
     <title>{{ title }}</title>
 </head>
-<body>
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
+<body style="background-color: #ffffe0;">
+    <nav class="navbar navbar-expand navbar-dark" style="background-color: #581845;">
         <div class="container">
-            <a href="/" class="navbar-brand">О нас</a>
+            <a href="/" class="navbar-brand" style="color: #FF5733;">О нас</a>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="catalog" class="nav-link">Каталог</a>
+                    <a href="catalog" class="nav-link" style="color: #FFC300;">Каталог</a>
                 </li>
                 {% if current_user.is_authenticated %}
                     <li class="nav-item"><a href="logout" class="nav-link">{{ current_user.name }}</a></li>
                 {% else %}
                     <li class="nav-item">
-                        <a href="register" class="nav-link">Регистрация</a>
+                        <a href="register" class="nav-link" style="color: #FFC300;">Регистрация</a>
                     </li>
                     <li class="nav-item">
-                        <a href="login" class="nav-link">Авторизация</a>
+                        <a href="login" class="nav-link" style="color: #FFC300;">Авторизация</a>
                     </li>
                 {% endif %}
             </ul>
