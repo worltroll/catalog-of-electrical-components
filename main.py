@@ -1,10 +1,11 @@
 import os
 
-from flask import Flask, redirect, render_template
+from flask import Flask, jsonify, make_response, redirect, render_template
 from flask_login import LoginManager, login_required, login_user, logout_user
 
+from data import users_api
 from data.db_session import create_session, global_init
-from data.user import User
+from data.users import User
 from forms.user import LoginForm, RegistationForm
 
 app = Flask(__name__)
@@ -12,6 +13,16 @@ app.config["SECRET_KEY"] = "6bbc695e03c4c4745fd786c943cb1d44"
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({"error": "Not found"}), 404)
+
+
+@app.errorhandler(400)
+def bad_request(_):
+    return make_response(jsonify({"error": "Bad Request"}), 400)
 
 
 @login_manager.user_loader
@@ -23,6 +34,7 @@ def load_user(user_id):
 @app.route("/")
 def index():
     return render_template("index.html", title="Главная страница")
+
 
 @app.route("/catalog")
 def catalog():
@@ -68,8 +80,14 @@ def logout():
     return redirect("/")
 
 
+@app.route("/account")
+def account():
+    return render_template("account.html")
+
+
 def main():
     global_init("./db/database.db")
+    app.register_blueprint(users_api.blueprint)
     app.run()
 
 
