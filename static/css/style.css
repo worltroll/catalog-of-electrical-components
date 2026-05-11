@@ -1,0 +1,25 @@
+.colored_form {
+    color: #FFC300;
+}
+
+.colored_button {
+    color: #FF5733;
+    background-color: #581845;
+    border-color: #581845;
+}
+.colored_button:hover,
+.colored_button:focus,
+.colored_button:active {
+    color: #FFC300;
+    background-color: #581845;
+    border-color: #581845;
+}
+
+.colored_check:checked {
+    accent-color: #581845;
+}
+
+.colored_h {
+    text-align: center;
+    color: #FFC300;
+}
