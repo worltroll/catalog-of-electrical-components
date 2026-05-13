@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import SubmitField, EmailField, PasswordField, StringField, BooleanField, validators
+from wtforms import SubmitField, EmailField, PasswordField, StringField, BooleanField, FileField, validators
 
 
 class RegistationForm(FlaskForm):
@@ -20,3 +20,16 @@ class LoginForm(FlaskForm):
     password = PasswordField('Пароль', validators=[validators.DataRequired()])
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
+
+class EditUserForm(FlaskForm):
+    name = StringField("Имя")
+    email = EmailField("Эл. Почта")
+    password = PasswordField("Пароль")
+    confirm = PasswordField(
+        "Повторите пароль",
+        validators=[
+            validators.EqualTo("password", message="Пароли должны совпадать"),
+        ],
+    )
+    image = FileField("Изображение профиля")
+    submit = SubmitField("Сохранить")
