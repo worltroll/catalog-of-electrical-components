@@ -1,6 +1,5 @@
 import datetime
 import sqlalchemy
-from flask import url_for
 from .db_session import SqlAlchemyBase
 from sqlalchemy_serializer import SerializerMixin
 from flask_login import UserMixin
