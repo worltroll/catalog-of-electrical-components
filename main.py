@@ -10,15 +10,27 @@ from flask_login import (
 )
 
 from data import users_api
-from data.db_session import create_session, global_init
+import data.db_session as db_session
 from data.users import User
 from forms.user import EditUserForm, LoginForm, RegistationForm
+
+db_session.global_init("./db/database.db")
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "6bbc695e03c4c4745fd786c943cb1d44"
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.db_sess.remove()
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return db_session.db_sess.get(User, user_id)
 
 
 @app.errorhandler(404)
@@ -29,12 +41,6 @@ def not_found(error):
 @app.errorhandler(400)
 def bad_request(_):
     return make_response(jsonify({"error": "Bad Request"}), 400)
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    db_sess = create_session()
-    return db_sess.get(User, user_id)
 
 
 @app.route("/")
@@ -88,7 +94,7 @@ def catalog():
         )
     else:
         favorite_set = set()
-    
+
     for cat in categories:
         cat["is_favorite"] = cat["id"] in favorite_set
 
@@ -149,8 +155,7 @@ def favorite():
 @login_required
 @app.route("/favorite/toggle/<cat_id>")
 def toggle_favorite(cat_id):
-    db_sess = create_session()
-    user = db_sess.get(User, current_user.id)
+    user = db_session.db_sess.get(User, current_user.id)
     favorite = user.favorite.split(",")
     favorite: list
     if cat_id in favorite:
@@ -158,7 +163,7 @@ def toggle_favorite(cat_id):
     else:
         favorite.append(cat_id)
     user.favorite = ",".join(favorite)
-    db_sess.commit()
+    db_session.db_sess.commit()
     return redirect("/catalog")
 
 
@@ -166,8 +171,7 @@ def toggle_favorite(cat_id):
 def register():
     form = RegistationForm()
     if form.validate_on_submit():
-        db_sess = create_session()
-        if db_sess.query(User).filter(User.email == form.email.data).first():
+        if db_session.db_sess.query(User).filter(User.email == form.email.data).first():
             return render_template(
                 "register.html",
                 title="Регистрация",
@@ -179,8 +183,8 @@ def register():
         user.name = form.name.data
         user.set_password(form.password.data)
 
-        db_sess.add(user)
-        db_sess.commit()
+        db_session.db_sess.add(user)
+        db_session.db_sess.commit()
         return redirect("/login")
 
     return render_template("register.html", title="Регистрация", form=form)
@@ -190,8 +194,7 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        db_sess = create_session()
-        user = db_sess.query(User).filter(User.email == form.email.data).first()
+        user = db_session.db_sess.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
@@ -210,8 +213,7 @@ def logout():
 
 @app.route("/account", methods=["GET", "POST"])
 def account():
-    db_sess = create_session()
-    user = db_sess.get(User, current_user.id)
+    user = db_session.db_sess.get(User, current_user.id)
     if not user:
         return redirect("/")
     form = EditUserForm()
@@ -228,7 +230,7 @@ def account():
             file = form.image.data
             file.save(f"static/img/user/{user.id}/user_img.png")
             user.image = f"/static/img/user/{user.id}/user_img.png"
-        db_sess.commit()
+        db_session.db_sess.commit()
         return redirect("/")
     elif request.method == "GET":
         form.name.data = user.name
@@ -237,7 +239,6 @@ def account():
 
 
 def main():
-    global_init("./db/database.db")
     app.register_blueprint(users_api.blueprint)
     app.run()
 
