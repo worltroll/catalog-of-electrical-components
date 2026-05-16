@@ -14,11 +14,11 @@
             <a href="/" class="navbar-brand" style="color: #FF5733;">О нас</a>
             <ul class="navbar-nav align-items-center">
                 <li class="nav-item">
-                    <a href="catalog" class="nav-link" style="color: #FFC300;">Каталог</a>
+                    <a href="catalog" class="nav-link" style="color: #FF5733;">Каталог</a>
                 </li>
                 {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a href="favorite" class="nav-link" style="color: #FFC300;">Любимое</a>
+                        <a href="favorite" class="nav-link" style="color: #FF5733;">Любимое</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
@@ -30,16 +30,16 @@
                             </span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/account">Аккаунт</a></li>
-                            <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+                            <li><a class="dropdown-item" style="color: #FF5733;" href="/account">Аккаунт</a></li>
+                            <li><a class="dropdown-item" style="color: #FF5733;" href="/logout">Выйти</a></li>
                         </ul>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a href="register" class="nav-link" style="color: #FFC300;">Регистрация</a>
+                        <a href="register" class="nav-link" style="color: #FF5733;">Регистрация</a>
                     </li>
                     <li class="nav-item">
-                        <a href="login" class="nav-link" style="color: #FFC300;">Авторизация</a>
+                        <a href="login" class="nav-link" style="color: #FF5733;">Авторизация</a>
                     </li>
                 {% endif %}
             </ul>

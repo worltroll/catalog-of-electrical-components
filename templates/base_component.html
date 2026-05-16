@@ -2,21 +2,29 @@
 {% block content %}
     <div class="row">
         <div class="col">
-            <h1>{{ %name% }}</h1>
+            {% block name %}{% endblock %}
         </div>
     </div>
 
     <div class="row">
         <div class="col">
-            <p>Описание</p>
+            <h3 class="colored_h3">Описание</h3>
+            {% block description %}{% endblock %}
         </div>
     </div>
-    {% block content 1 %}{% endblock %}
+
 
     <div class="row">
         <div class="col">
-            <p>{{ %tool% }}</p>
+            <h3 class="colored_h3">Изображения</h3>
+            {% block images %}{% endblock %}
         </div>
     </div>
-    {% block content 2 %}{% endblock %}
+
+    <div class="row">
+        <div class="col">
+            <h3 class="colored_h3">Инструмент</h3>
+            {% block tool %}{% endblock %}
+        </div>
+    </div>
 {% endblock %}

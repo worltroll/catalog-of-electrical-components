@@ -94,11 +94,41 @@ def catalog():
         )
     else:
         favorite_set = set()
-
+    
     for cat in categories:
         cat["is_favorite"] = cat["id"] in favorite_set
 
     return render_template("catalog.html", title="Каталог", categories=categories)
+
+
+@app.route(f"/resistors")
+def resistors():
+    return render_template(f"resistors.html", title="Резисторы")
+
+
+@app.route(f"/capacitors")
+def capacitors():
+    return render_template(f"capacitors.html", title="Конденсаторы")
+
+
+@app.route(f"/buttons")
+def buttons():
+    return render_template(f"buttons.html", title="Кнопки")
+
+
+@app.route(f"/drossels")
+def drossels():
+    return render_template(f"drossels.html", title="Дроссели")
+
+
+@app.route(f"/diods")
+def diods():
+    return render_template(f"diods.html", title="Диоды")
+
+
+@app.route(f"/transistors")
+def transistors():
+    return render_template(f"transistors.html", title="Транзисторы")
 
 
 @login_required

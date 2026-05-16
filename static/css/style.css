@@ -1,5 +1,5 @@
 .colored_form {
-    color: #FFC300;
+    color: #FF5733;
 }
 
 .colored_button {
@@ -21,5 +21,9 @@
 
 .colored_h {
     text-align: center;
-    color: #FFC300;
+    color: #FF5733;
+}
+
+.colored_h3 {
+    color: #FF5733;
 }
