@@ -14,6 +14,7 @@ import data.db_session as db_session
 from data.users import User
 from forms.user import EditUserForm, LoginForm, RegistationForm
 
+os.makedirs("db", exist_ok=True)
 db_session.global_init("./db/database.db")
 
 app = Flask(__name__)
@@ -274,5 +275,4 @@ def main():
 
 
 if __name__ == "__main__":
-    os.makedirs("db", exist_ok=True)
     main()
