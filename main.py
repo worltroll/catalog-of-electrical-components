@@ -82,10 +82,13 @@ def catalog():
             "url": "transistors",
         },
     ]
-
-    favorite_set = (
-        set(current_user.favorite.split(",")) if current_user.favorite else set()
-    )
+    if current_user.is_authenticated:
+        favorite_set = (
+            set(current_user.favorite.split(",")) if current_user.favorite else set()
+        )
+    else:
+        favorite_set = set()
+    
     for cat in categories:
         cat["is_favorite"] = cat["id"] in favorite_set
 
