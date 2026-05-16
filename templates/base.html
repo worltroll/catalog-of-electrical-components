@@ -17,6 +17,9 @@
                     <a href="catalog" class="nav-link" style="color: #FFC300;">Каталог</a>
                 </li>
                 {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a href="favorite" class="nav-link" style="color: #FFC300;">Любимое</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
                             <span class="d-inline-flex align-items-center">

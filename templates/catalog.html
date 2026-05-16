@@ -3,67 +3,22 @@
      <div class="container">
         <h2 class="colored_h">Наш каталог</h2>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-
-            <div class="col">
-                <div class="card h-100 shadow-sm colored_form">
-                    <img src="static/img/resistors.png" class="card-img-top" alt="Резисторы">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Резисторы</h5>
-                        <a href="resistors" class="colored_button btn w-100">Перейти</a>
+            {% for category in categories %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm colored_form">
+                        <a class="favorite-btn btn btn-link position-absolute top-0 end-0 mt-2 me-2"
+                        href="{{ url_for('toggle_favorite', cat_id=category.id) }}"
+                        style="font-size: 1.8rem; z-index: 10; text-decoration: none;">
+                        {% if category.is_favorite %}❤️{% else %}🤍{% endif %}
+                        </a>
+                        <img src="{{ category.img }}" class="card-img-top" alt="{{ category.name }}">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ category.name }}</h5>
+                            <a href="{{ category.url }}" class="colored_button btn w-100">Перейти</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 shadow-sm colored_form">
-                    <img src="static/img/capacitors.png" class="card-img-top" alt="Конденсаторы">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Конденсаторы</h5>
-                        <a href="capacitors" class="colored_button btn w-100">Перейти</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 shadow-sm colored_form">
-                    <img src="static/img/buttons.png" class="card-img-top" alt="Кнопки">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Кнопки</h5>
-                        <a href="buttons" class="colored_button btn w-100">Перейти</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 shadow-sm colored_form">
-                    <img src="static/img/drossels.png" class="card-img-top" alt="Дроссели">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Дроссели</h5>
-                        <a href="drossels" class="colored_button btn w-100">Перейти</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 shadow-sm colored_form">
-                    <img src="static/img/diods.png" class="card-img-top" alt="Диоды">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Диоды</h5>
-                        <a href="diods" class="colored_button btn w-100">Перейти</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 shadow-sm colored_form">
-                    <img src="static/img/transistors.png" class="card-img-top" alt="Транзисторы">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Транзисторы</h5>
-                        <a href="transistors" class="colored_button btn w-100">Перейти</a>
-                    </div>
-                </div>
-            </div>
-
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

@@ -44,7 +44,119 @@ def index():
 
 @app.route("/catalog")
 def catalog():
-    return render_template("catalog.html", title="Каталог")
+    categories = [
+        {
+            "id": "1",
+            "name": "Резисторы",
+            "img": "static/img/resistors.png",
+            "url": "resistors",
+        },
+        {
+            "id": "2",
+            "name": "Конденсаторы",
+            "img": "static/img/capacitors.png",
+            "url": "capacitors",
+        },
+        {
+            "id": "3",
+            "name": "Кнопки",
+            "img": "static/img/buttons.png",
+            "url": "buttons",
+        },
+        {
+            "id": "4",
+            "name": "Дроссели",
+            "img": "static/img/drossels.png",
+            "url": "drossels",
+        },
+        {
+            "id": "5",
+            "name": "Диоды",
+            "img": "static/img/diods.png",
+            "url": "diods",
+        },
+        {
+            "id": "6",
+            "name": "Транзисторы",
+            "img": "static/img/transistors.png",
+            "url": "transistors",
+        },
+    ]
+
+    favorite_set = (
+        set(current_user.favorite.split(",")) if current_user.favorite else set()
+    )
+    for cat in categories:
+        cat["is_favorite"] = cat["id"] in favorite_set
+
+    return render_template("catalog.html", title="Каталог", categories=categories)
+
+
+@login_required
+@app.route("/favorite")
+def favorite():
+    categories = [
+        {
+            "id": "1",
+            "name": "Резисторы",
+            "img": "static/img/resistors.png",
+            "url": "resistors",
+        },
+        {
+            "id": "2",
+            "name": "Конденсаторы",
+            "img": "static/img/capacitors.png",
+            "url": "capacitors",
+        },
+        {
+            "id": "3",
+            "name": "Кнопки",
+            "img": "static/img/buttons.png",
+            "url": "buttons",
+        },
+        {
+            "id": "4",
+            "name": "Дроссели",
+            "img": "static/img/drossels.png",
+            "url": "drossels",
+        },
+        {
+            "id": "5",
+            "name": "Диоды",
+            "img": "static/img/diods.png",
+            "url": "diods",
+        },
+        {
+            "id": "6",
+            "name": "Транзисторы",
+            "img": "static/img/transistors.png",
+            "url": "transistors",
+        },
+    ]
+
+    favorite_set = (
+        set(current_user.favorite.split(",")) if current_user.favorite else set()
+    )
+    for cat in categories:
+        cat["is_favorite"] = cat["id"] in favorite_set
+
+    return render_template("favorite.html", title="Любимое", categories=categories)
+
+
+@login_required
+@app.route("/favorite/toggle/<cat_id>")
+def toggle_favorite(cat_id):
+    db_sess = create_session()
+    user = db_sess.get(User, current_user.id)
+    favorite = user.favorite.split(",")
+    favorite: list
+    if cat_id in favorite:
+        favorite.remove(cat_id)
+    else:
+        favorite.append(cat_id)
+    user.favorite = ",".join(favorite)
+    db_sess.commit()
+    return redirect("/catalog")
 
 
 @app.route("/register", methods=["GET", "POST"])

@@ -14,6 +14,7 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     hashed_password = sqlalchemy.Column(sqlalchemy.String)
     created_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now())
     image = sqlalchemy.Column(sqlalchemy.String, default="/static/img/user/account_placeholder.jpg")
+    favorite = sqlalchemy.Column(sqlalchemy.String, default="") #  "<id1>,<id2>,<id3>,..."
     
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
