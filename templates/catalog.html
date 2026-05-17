@@ -8,7 +8,7 @@
                     <div class="card h-100 shadow-sm colored_form">
                         {% if current_user.is_authenticated %}
                             <a class="favorite-btn btn btn-link position-absolute top-0 end-0 mt-2 me-2"
-                            href="{{ url_for('toggle_favorite', cat_id=category.id) }}"
+                            href="{{ url_for('toggle_favorite', cat_id=category.id, from_favorite=0) }}"
                             style="font-size: 1.8rem; z-index: 10; text-decoration: none;">
                             {% if category.is_favorite %}❤️{% else %}🤍{% endif %}
                             </a>

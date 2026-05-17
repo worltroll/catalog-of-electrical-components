@@ -9,8 +9,8 @@ from flask_login import (
     logout_user,
 )
 
-from data import users_api
 import data.db_session as db_session
+from data import users_api
 from data.users import User
 from forms.user import EditUserForm, LoginForm, RegistationForm
 
@@ -95,41 +95,41 @@ def catalog():
         )
     else:
         favorite_set = set()
-    
+
     for cat in categories:
         cat["is_favorite"] = cat["id"] in favorite_set
 
     return render_template("catalog.html", title="Каталог", categories=categories)
 
 
-@app.route(f"/resistors")
+@app.route("/resistors")
 def resistors():
-    return render_template(f"resistors.html", title="Резисторы")
+    return render_template("resistors.html", title="Резисторы")
 
 
-@app.route(f"/capacitors")
+@app.route("/capacitors")
 def capacitors():
-    return render_template(f"capacitors.html", title="Конденсаторы")
+    return render_template("capacitors.html", title="Конденсаторы")
 
 
-@app.route(f"/buttons")
+@app.route("/buttons")
 def buttons():
-    return render_template(f"buttons.html", title="Кнопки")
+    return render_template("buttons.html", title="Кнопки")
 
 
-@app.route(f"/drossels")
+@app.route("/drossels")
 def drossels():
-    return render_template(f"drossels.html", title="Дроссели")
+    return render_template("drossels.html", title="Дроссели")
 
 
-@app.route(f"/diods")
+@app.route("/diods")
 def diods():
-    return render_template(f"diods.html", title="Диоды")
+    return render_template("diods.html", title="Диоды")
 
 
-@app.route(f"/transistors")
+@app.route("/transistors")
 def transistors():
-    return render_template(f"transistors.html", title="Транзисторы")
+    return render_template("transistors.html", title="Транзисторы")
 
 
 @login_required
@@ -184,8 +184,8 @@ def favorite():
 
 
 @login_required
-@app.route("/favorite/toggle/<cat_id>")
-def toggle_favorite(cat_id):
+@app.route("/favorite/toggle/<cat_id>/<int:from_favorite>")
+def toggle_favorite(cat_id, from_favorite):
     user = db_session.db_sess.get(User, current_user.id)
     favorite = user.favorite.split(",")
     favorite: list
@@ -195,6 +195,8 @@ def toggle_favorite(cat_id):
         favorite.append(cat_id)
     user.favorite = ",".join(favorite)
     db_session.db_sess.commit()
+    if from_favorite:
+        return redirect("/favorite")
     return redirect("/catalog")
 
 
@@ -225,7 +227,9 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = db_session.db_sess.query(User).filter(User.email == form.email.data).first()
+        user = (
+            db_session.db_sess.query(User).filter(User.email == form.email.data).first()
+        )
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
