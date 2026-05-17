@@ -1,6 +1,8 @@
 import flask
-import data.db_session as db_session
 from flask import jsonify, make_response, request
+
+import data.db_session as db_session
+
 from .users import User
 
 blueprint = flask.Blueprint("users_api", __name__, template_folder="templates")
@@ -42,3 +44,13 @@ def create_user():
     db_session.db_sess.add(user)
     db_session.db_sess.commit()
     return jsonify({"id": user.id})
+
+
+@blueprint.route("/api/users/<int:user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    user = db_session.db_sess.get(User, user_id)
+    if not user:
+        return make_response(jsonify({"error": "Not Found"}), 404)
+    db_session.db_sess.delete(user)
+    db_session.db_sess.commit()
+    return jsonify({"message": "User deleted"})
