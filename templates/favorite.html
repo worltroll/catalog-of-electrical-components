@@ -7,6 +7,11 @@
                 {% if category.is_favorite %}
                     <div class="col">
                         <div class="card h-100 shadow-sm colored_form">
+                            <a class="favorite-btn btn btn-link position-absolute top-0 end-0 mt-2 me-2"
+                                href="{{ url_for('toggle_favorite', cat_id=category.id, from_favorite=1) }}"
+                                style="font-size: 1.8rem; z-index: 10; text-decoration: none;">
+                                ❤️
+                            </a>
                             <img src="{{ category.img }}" class="card-img-top" alt="{{ category.name }}">
                             <div class="card-body text-center">
                                 <h5 class="card-title">{{ category.name }}</h5>

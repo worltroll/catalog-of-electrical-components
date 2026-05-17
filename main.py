@@ -184,8 +184,8 @@ def favorite():
 
 
 @login_required
-@app.route("/favorite/toggle/<cat_id>")
-def toggle_favorite(cat_id):
+@app.route("/favorite/toggle/<cat_id>/<int:from_favorite>")
+def toggle_favorite(cat_id, from_favorite):
     user = db_session.db_sess.get(User, current_user.id)
     favorite = user.favorite.split(",")
     favorite: list
@@ -195,6 +195,8 @@ def toggle_favorite(cat_id):
         favorite.append(cat_id)
     user.favorite = ",".join(favorite)
     db_session.db_sess.commit()
+    if from_favorite:
+        return redirect("/favorite")
     return redirect("/catalog")
 
 
