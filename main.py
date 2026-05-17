@@ -23,6 +23,10 @@ app.config["SECRET_KEY"] = "6bbc695e03c4c4745fd786c943cb1d44"
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+def ret_files_lst(path):
+    path = f"static/img/{path}"
+    files_lst =  [f"{path}/{f}" for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+    return files_lst
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
@@ -104,32 +108,32 @@ def catalog():
 
 @app.route("/resistors")
 def resistors():
-    return render_template("resistors.html", title="Резисторы")
+    return render_template("resistors.html", title="Резисторы", files=ret_files_lst("carousel_resistors"))
 
 
 @app.route("/capacitors")
 def capacitors():
-    return render_template("capacitors.html", title="Конденсаторы")
+    return render_template("capacitors.html", title="Конденсаторы", files=ret_files_lst("carousel_capacitors"))
 
 
 @app.route("/buttons")
 def buttons():
-    return render_template("buttons.html", title="Кнопки")
+    return render_template("buttons.html", title="Кнопки", files=ret_files_lst("carousel_buttons"))
 
 
 @app.route("/drossels")
 def drossels():
-    return render_template("drossels.html", title="Дроссели")
+    return render_template("drossels.html", title="Дроссели", files=ret_files_lst("carousel_drossels"))
 
 
 @app.route("/diods")
 def diods():
-    return render_template("diods.html", title="Диоды")
+    return render_template("diods.html", title="Диоды", files=ret_files_lst("carousel_diods"))
 
 
 @app.route("/transistors")
 def transistors():
-    return render_template("transistors.html", title="Транзисторы")
+    return render_template("transistors.html", title="Транзисторы", files=ret_files_lst("carousel_transistors"))
 
 
 @login_required
