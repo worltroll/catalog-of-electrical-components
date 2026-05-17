@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Редактирование пользователя</h1>
-    <form action="" method="post" enctype="multipart/form-data">
+    <h1 style="color: #FF5733">Редактирование пользователя</h1>
+    <form action="" method="post" enctype="multipart/form-data" class="colored_form">
         {{ form.hidden_tag() }}
         <p>
             {{ form.name.label }}<br>
@@ -50,7 +50,7 @@
                 </div>
             {% endfor %}
         </p>
-        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <p>{{ form.submit(type="submit", class="colored_button btn") }}</p>
         <div>{{ message }}</div>
     </form>
 {% endblock %}
